@@ -658,6 +658,7 @@ jobs:
           KERNEL_VERSION="${{ env.KERNEL_VERSION }}"
           echo "CONFIG_KSU=y" >> "$CONFIG_FILE"
           echo "CONFIG_KPM=y" >> "$CONFIG_FILE"
+          # SUSFS核心配置（启用所有必要功能）
           if [ "${{ github.event.inputs.SUSFS_META }}" != "-1" ]; then
             echo "CONFIG_KSU_SUSFS=y" >> "$CONFIG_FILE"
             echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> "$CONFIG_FILE"
@@ -874,6 +875,7 @@ jobs:
           rm -f Image
           mv oImage Image
           cp Image "${GITHUB_WORKSPACE}/AnyKernel3/Image"
+      # 自动下载SUSFS模块（CI/Release双渠道）
       - name: Download Latest SUSFS Module from CI
         if: ${{ github.event.inputs.SUSFS_CI == 'CI' && github.event.inputs.SUSFS_META != '-1' }}
         continue-on-error: true
